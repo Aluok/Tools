@@ -1,0 +1,41 @@
+sss_audit_client_voir:
+    pattern: /audit/voir
+    defaults: { _controller: SSSAuditBundle:Client:index }
+
+sss_audit_audit_index:
+    pattern: /index
+    defaults: { _controller: SSSAuditBundle:Audit:index }
+
+sss_audit_audit_liste:
+    pattern: /audits/{errorMessage}
+    defaults: { _controller: SSSAuditBundle:Audit:list, errorMessage: null }
+
+sss_audit_add:
+    pattern: /add/audit
+    defaults: { _controller: SSSAuditBundle:Audit:add }
+
+sss_audit_AJAX_save:
+    pattern: /save/audit/{audit}
+    defaults: { _controller: SSSAuditBundle:Audit:AJAXsave, audit: 0 }
+    requirements:
+        audit: \d+
+
+sss_audit_delete:
+    pattern: /delete/{audit}
+    defaults: { _controller: SSSAuditBundle:Audit:delete}
+    requirements:
+        audits: \d+
+
+sss_audit_update:
+    pattern: /update/audit
+    defaults: { _controller: SSSAuditBundle:Audit:update }
+
+sss_audit_homepage:
+    pattern:  /
+    defaults: { _controller: SSSAuditBundle:Default:index }
+
+sss_audit_create_access:
+    pattern: /create/{client}
+    defaults: { _controller: SSSAuditBundle:Audit:createAccess}
+    requirements:
+        client: \D+

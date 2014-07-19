@@ -1,0 +1,29 @@
+{% extends "SSSToDoBundle::layout.html.twig" %}
+
+{% block header %}
+{% endblock %}
+
+{% block title %}
+{% endblock %}
+
+{% block js_lien %}
+
+<script type="text/javascript" src="{{ asset('js/Todo/toDoBundle_AJAX_Tasks.js') }}"></script>
+{% endblock %}
+
+{% block contenu %}
+	<section id="addOverlay" class="overlays">
+		<form method="post" action="{{ path('sss_to_do_add_task') }}" id="addForm">
+			{{form_widget(form) }}
+			<input type="submit" id="submit" />
+			<button type="button" id="close">Fermer</button>
+		</form>
+	</section>
+	<button type="button" id="add">Add</button>
+	<section id="deleteOverlay" class="overlays">
+	</section>
+	<ul id="liste_tasks">
+		<img src="{{ asset('images/todo/ajax_loader.gif') }}" id="task_loading" />
+	</ul>
+
+{% endblock %}

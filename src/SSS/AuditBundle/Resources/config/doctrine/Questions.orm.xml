@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="SSS\AuditBundle\Entity\Questions"
+          repository-class="SSS\AuditBundle\Entity\QuestionsRepository">
+    <id name="id" type="integer" column="id">
+      <generator strategy="AUTO"/>
+    </id>
+    <field name="question" type="string" column="question" length="255"/>
+    <field name="categorie" type="string" column="categorie" length="100"/>
+    <field name="typeAudit" type="integer" column="type_audit"/>
+    <many-to-one field="require"
+                 target-entity="Questions"
+                 join-column="questions">
+        <join-column name="require"
+                     referenced-column_name="id" />
+    </many-to-one>
+  </entity>
+</doctrine-mapping>

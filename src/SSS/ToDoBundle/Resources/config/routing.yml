@@ -1,0 +1,26 @@
+sss_to_do_homepage:
+    pattern:  /
+    defaults: { _controller: SSSToDoBundle:Default:index }
+
+
+sss_to_do_getTasks:
+    pattern:  /getTasks
+    defaults: { _controller: SSSToDoBundle:Ajax:getTasks }
+
+sss_to_do_add_task:
+    pattern: /add/{task}
+    defaults: { _controller: SSSToDoBundle:Ajax:add, task: 0 }
+
+
+sss_to_do_del_task:
+    pattern: /del/{task}/{validated}
+    defaults: { _controller: SSSToDoBundle:Default:delete, validated: 0 }
+    requirements:
+        task: \d+
+        validated: 0|1
+
+sss_to_do_update_task:
+    pattern: /update/{task}/
+    defaults: { _controller: SSSToDoBundle:Default:update }
+    requirements:
+        task: \d+

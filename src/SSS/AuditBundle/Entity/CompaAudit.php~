@@ -1,0 +1,153 @@
+<?php
+
+namespace SSS\AuditBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * CompaAudit
+ */
+class CompaAudit
+{
+    /**
+     * @var integer
+     */
+    private $id;
+
+    /**
+     * @var integer
+     */
+    private $note;
+
+    /**
+     * @var array
+     */
+    private $idPartiel;
+
+    /**
+     * @var array
+     */
+    private $idOui;
+
+    /**
+     * @var array
+     */
+    private $idNon;
+
+    const NBR_QUESTIONS = 25;
+
+    /**
+     * Get id
+     *
+     * @return integer 
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set note
+     *
+     * @param integer $note
+     * @return CompaAudit
+     */
+    public function setNote($note)
+    {
+        $this->note = $note;
+
+        return $this;
+    }
+
+    /**
+     * Get note
+     *
+     * @return integer 
+     */
+    public function getNote()
+    {
+        return $this->note;
+    }
+
+    /**
+     * Set idPartiel
+     *
+     * @param array $idPartiel
+     * @return CompaAudit
+     */
+    public function setIdPartiel($idPartiel)
+    {
+        $this->idPartiel = $idPartiel;
+
+        return $this;
+    }
+
+    /**
+     * Get idPartiel
+     *
+     * @return array 
+     */
+    public function getIdPartiel()
+    {
+        return $this->idPartiel;
+    }
+
+    /**
+     * Set idOui
+     *
+     * @param array $idOui
+     * @return CompaAudit
+     */
+    public function setIdOui($idOui)
+    {
+        $this->idOui = $idOui;
+
+        return $this;
+    }
+
+    /**
+     * Get idOui
+     *
+     * @return array 
+     */
+    public function getIdOui()
+    {
+        return $this->idOui;
+    }
+
+    /**
+     * Set idNon
+     *
+     * @param array $idNon
+     * @return CompaAudit
+     */
+    public function setIdNon($idNon)
+    {
+        $this->idNon = $idNon;
+
+        return $this;
+    }
+
+    /**
+     * Get idNon
+     *
+     * @return array 
+     */
+    public function getIdNon()
+    {
+        return $this->idNon;
+    }
+
+    /**
+     * Set id
+     *
+     * @param integer $id
+     * @return CompaAudit
+     */
+    public function setId($id)
+    {
+        $this->id = $id;
+
+        return $this;
+    }
+}

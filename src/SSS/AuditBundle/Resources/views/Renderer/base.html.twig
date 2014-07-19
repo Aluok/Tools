@@ -1,0 +1,25 @@
+<div id="{{ general.id }}" class="part grid_10">
+    <h2 class="grid_9">{{ general.nom }}</h2>
+    <p id="note_{{ general.id|slice(0,4) }}" class="grid_10"><span id="{{ general.id|slice(0,4) }}_result" class="note_part">0</span>/<span id="{{ general.id|slice(0,4) }}_note_max" class="note_max">50</span></p>
+    {% set id = 0 %}
+    {% for categorie in categories %}
+
+        <section class="categorie grid_10">
+            <h3 class="grid_10">{{ categorie.categorie|capitalize }} </h3>
+            <p class="note grid_10" id="note_{{ general.id|slice(0,4) }}_accueil">0</p>
+            <ul id="{{ general.id|slice(0,4) }}_{{ categorie.categorie|slice(0,4) }}" class="grid_10">
+                {% for question in categorie.questions %}
+                    {% set id = id + 1 %}
+                    {% set ok = false %}
+                    <li id="{{ question.id }}" class="{{ general.id|slice(0,4) }}_item grid_10 {% if question.require is not empty %}require" require="{{ question.require.id }}{% endif %}">
+                        <div class="question grid_5" >{{ question.question }}</div>
+                        <div class="oui grid_1 {% if question.id in existant.idOui %}dsf selected{% set ok = true %}{% else %}unselected{% endif %}" >Oui</div>
+                        <div class="partiel grid_1 {% if question.id in existant.idPartiel and ok != true %}selected{% set ok =true %}{% else %}unselected{% endif %}">Partiel</div>
+                        <div class="Non grid_1 {% if question.id in existant.idNon and ok != true %}selected{% set ok =true %}{% else %}unselected{% endif %}">Non</div>
+                        <div class="impertinant grid_1 {% if ok == false %}selected {% else %} unselected {% endif %}">Non Pertinent</div></li>
+                {% endfor %}
+            </ul>
+        </section>
+    {% endfor %}
+    <p class="grid_10"><a href="#" title="Return on top">Retour haut de page</a></p>
+</div>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+  <entity name="SSS\AuditBundle\Entity\ErgoAudit">
+    <id name="id" type="integer" column="id">
+    </id>
+    <field name="idOui" type="simple_array" column="id_oui" nullable="true" />
+    <field name="idNon" type="simple_array" column="id_non" nullable="true" />
+    <field name="idPartiel" type="simple_array" column="id_partiel" nullable="true" />
+  </entity>
+</doctrine-mapping>

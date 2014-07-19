@@ -1,0 +1,21 @@
+{% extends "SSSToDoBundle::layout.html.twig" %}
+
+{% block header %}
+{% endblock %}
+
+{% block title %}
+{% endblock %}
+
+{% block js_lien %}
+{% endblock %}
+
+{% block contenu %}
+<div>
+	<h2>Valider la suppression pour la tache et ses sous-taches</h2>
+	{% for task in tasks %}
+	<h3>{{ task.titre }}</h3>
+	<p>{{ task.description }}<p>
+	{% endfor %}
+	<p id="sdq"><a href="{{ path('sss_to_do_del_task', {'task': mainTask.id, 'validated':1}) }}"><button type="button">Valider la suppression</button></a></p>
+</div>
+{% endblock %}

@@ -1,0 +1,4 @@
+sss_user:
+    resource: "@SSSUserBundle/Resources/config/routing.xml"
+    prefix:   /
+

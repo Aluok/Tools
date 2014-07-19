@@ -1,0 +1,91 @@
+{% extends "SSSAuditBundle::layout.html.twig" %}
+
+{% block header %}
+    <header class="grid_12" role="banner">
+        <h1>Outil d'audits</h1>
+        <h2>Évaluation de sites web</h2>
+
+    </header>
+{% endblock %}
+
+{% block title %}
+{% endblock %}
+
+{% block js_lien %}
+    <script type="text/javascript" src="{{ asset('js/Audit/AuditIndex.js') }}"></script>
+{% endblock %}
+
+{% block contenu %}
+
+    <div class="grid_10 push_1" id="content">
+        <div class="grid_8 push_1">
+            <h1>Général</h1>
+            <h2>Commentaire de l'auditeur</h2>
+            <p>
+                {% if audit.general.commentaire == "" %}
+                    L'auditeur n'a pas laissé de commentaire.
+                {% else %}
+                    {{ audit.general.commentaire }}
+                {% endif %}
+            </p>
+            <h2>Note globale : <strong>{{ audit.note }}</strong></h2>
+        </div>
+        <div class="grid_4">
+        <h2>Ergonomie</h2>
+            {% if audit.general.testErgo %}
+                <h3>Note : <strong>{{ audit.ergo.note }}</strong></h3>
+                <h3>Points d'amélioration</h3>
+                <p>
+                    {% for question in idNon.ergo %}
+                        {{ question.question }}
+                    {% endfor %}
+                </p>
+            {% else %}
+                <p>Cet audit n'a pas été réalisé.</p>
+            {% endif %}
+        </div>
+        <div class="grid_4 push_2">
+        <h2>Accessibilité</h2>
+            {% if audit.general.testAccess %}
+                <h3>Note : <strong>{{ audit.access.note }}</strong></h3>
+                <h3>Points d'amélioration</h3>
+                <p>
+                    {% for question in idNon.access %}
+                        {{ question.question }}
+                    {% endfor %}
+                </p>
+            {% else %}
+                <p>Cet audit n'a pas été réalisé.</p>
+            {% endif %}
+        </div>
+        <div class="clear"></div>
+        <div class="grid_4">
+        <h2>Compatibilité</h2>
+            {% if audit.general.testCompa %}
+                <h3>Note : <strong>{{ audit.compa.note }}</strong></h3>
+                <h3>Points d'amélioration</h3>
+                <p>
+                    {% for question in idNon.compa %}
+                        {{ question.question }}
+                    {% endfor %}
+                </p>
+            {% else %}
+                <p>Cet audit n'a pas été réalisé.</p>
+            {% endif %}
+        </div>
+        <div class="grid_4 push_2">
+        <h2>Fonctionnalités</h2>
+            {% if audit.general.testFct %}
+                <h3>Note : <strong>{{ audit.fct.note }}</strong></h3>
+                <h3>Points d'amélioration</h3>
+                <p>
+                    {% for question in idNon.fct %}
+                        {{ question.question }}
+                    {% endfor %}
+                </p>
+            {% else %}
+                <p>Cet audit n'a pas été réalisé.</p>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,86 @@
+{% extends "SSSAuditBundle::layout.html.twig" %}
+
+{% block title %}
+    Liste des audits réalisés - {{ parent() }}
+
+{% endblock %}
+
+{% block js_lien %}
+    <script type="text/javascript" src="{{ asset('js/Audit/AuditListAudits.js') }}">
+    </script>
+{% endblock %}
+
+{% block overlay %}
+    <div id="overlay_acces" class="overlay hidden">
+        <form method="post" action="" class="inner_overlay" id="create_access">
+            <label for="mail" class="grid_3">Mail :</label><br />
+            <input type="email" name="mail" id="mail" placeholder="Type in here the mail of your client" class="grid_3" /><br />
+            <input type="submit" class="button" value="Créer accès" />
+        </form>
+        <div class="grid_7 inner_overlay hidden" id="infos_access">
+            <p>Identifiant : <span id="id"></span><br />
+                Mot de passe : <span id="mdp"></span><br />
+                <button id="infos_ok">J'ai bien noté les informations à faire parvenir à mon client</button>
+        </div>
+    </div>
+    <div id="overlay_delete" class="overlay hidden">
+        <div class="inner_overlay">
+            <input type="hidden" value="" name="id" id="id_to_delete" />
+            <h2>Attention, opération irréversible !</h2>
+            <p>Voulez-vous vraiment supprimer les audits du client <span id="client"></span></p>
+            <button class="grid_3 button push_1" id="confirmed_delete">Supprimer</button>
+        </div>
+        <div class="inner_overlay hidden ajax_loader">
+            <p class="hidden ajax_message"></p>
+            <img src="{{ asset('images/ajax-loader.gif') }}" id="ajax_loader" /></div>
+    </div>
+    <div id="overlay_update" class="overlay hidden">
+        <form action="{{ path('sss_audit_update') }}" method="post" class="inner_overlay">
+            <input type="hidden" value="" name="id" id="id_to_update" />
+            <input type="checkbox" name="update" value="ergo" id="ergo" checked /><label for="ergo" id="ergo_label">Ergonomie</label><br />
+            <input type="checkbox" name="update" value="access" id="access" checked /><label for="access" id="access_label">Accessibilité</label><br />
+            <input type="checkbox" name="update" value="compa" id="compa" checked /><label for="compa" id="compa_label">Compatibilité</label><br />
+            <input type="checkbox" name="update" value="fct" id="fct" checked /><label for="fct" id="fct_label">Fonctionnalités</label><br />
+            <input type="submit" class="button" value="Modifier" />
+        </form>
+    </div>
+{% endblock %}
+
+{% block contenu %}
+    <div id="content_no_padding" class="grid_10 push_1 ">
+        {% if error_message is not null %}
+           <p>{{error_message}}</p>
+        {% endif %}
+        <ul id="list_client">
+            {% for audit in audits %}
+                <li id="{{ audit.id }}" action_url="{{ path('sss_audit_create_access', {'client': audit.client}) }}"><span class="client grid_9 alpha">{{ audit.client }}</span><button class="menu"></button>
+                    <div class="details">
+                        <p class="grid_2">Total : {{ attribute(note_audits, loop.index0).total }}</p>
+                        <p class="grid_7">{{ audit.commentaire }}</p>
+                        <ul class="grid_4">
+                            {% if audit.testErgo %}
+                                <li>Ergo : {{ attribute(attribute(note_audits, loop.index0), 'ergo') }}</li>
+                            {% endif %}
+                            {% if audit.testAccess %}
+                                <li>Access : {{ attribute(attribute(note_audits, loop.index0), 'access') }}</li>
+                            {% endif %}
+                            {% if audit.testCompa %}
+                                <li>Compa : {{ attribute(attribute(note_audits, loop.index0), 'compa') }}</li>
+                            {% endif %}
+                            {% if audit.testFct %}
+                                <li>Fonctions : {{ attribute(attribute(note_audits, loop.index0), 'fct') }}</li>
+                            {% endif %}
+                        </ul>
+                        <div class="options grid_5">
+                            <button class="button add"><a href="#" class="{{ audit.audits }}">+</a></button>
+                            <button class="button update"><a href="#" class="{{ audit.audits }}"><img src="{{ asset('images/icones/crayon.jpg') }}" alt="Modifier" /></a></button>
+                            <button class="button delete"><a href="#" class="{{ audit.audits }}"><img src="{{ asset('images/icones/close.button.png') }}" alt="Supprimer" /></a></button>
+                            <button class="button acces_client">Accès client</button>
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+        <a href="{{ path('sss_audit_audit_index') }}" class="" ><button class="button grid_2 push_4">Retour</button></a>
+    </div>
+{% endblock %}

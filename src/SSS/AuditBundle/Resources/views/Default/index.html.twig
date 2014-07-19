@@ -1,0 +1,38 @@
+{% extends "SSSAuditBundle::layout.html.twig" %}
+
+
+{% block title %}
+    Audit de sites Web - {{ parent() }}
+{% endblock %}
+
+{% block contenu %}
+    <ul class="grid_10 push_1" id="content">
+        {% if is_granted("ROLE_AUDITEUR") %}
+            <li class="grid_2 push_2" >
+                <button class="button">
+                    <a href="{{ path('sss_audit_audit_index') }}">Gestion d'audits</a>
+                </button>
+            </li>
+        {% else %}
+            {% if is_granted("ROLE_CLIENT") %}
+                <li class="button  grid_2 push_2">
+                    <button class="button">
+                        <a href="{{ path('sss_audit_client_voir') }}">Voir mes audits</a>
+                    </button>
+                </li>
+            {% else %}
+                <li class="button  grid_2 push_2">
+                    <button class="button">
+                        <a href="{{ path('fos_user_security_login') }}">Se logguer</a>
+                    </button>
+                </li>
+            {% endif %}
+        {% endif %}
+
+        <li class="button grid_2 push_4">
+            <button class="button">
+                <a href="{{ path('sss_accueil_homepage') }}">Retour outils</a>
+            </button>
+        </li>
+    </ul>
+{% endblock %}

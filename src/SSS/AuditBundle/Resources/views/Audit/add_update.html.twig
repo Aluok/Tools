@@ -1,0 +1,71 @@
+{% extends "SSSAuditBundle::layout.html.twig" %}
+
+{% block title %}
+    Faire un audit - {{parent()}}
+{% endblock %}
+
+{% block js_lien %}
+    <script type="text/javascript" src="{{ asset('js/Audit/AuditAdd.js') }}"></script>
+{% endblock %}
+
+{% block overlay %}
+    <div class="overlay hidden" id="overlay_add_audit">
+        <div class="inner_overlay">
+            <p class="hidden error" id="ajax_error"></p>
+            <p class="hidden message" id="ajax_success"></p>
+            <img src="{{ asset('images/ajax-loader.gif') }}" id="ajax_loader" />
+        </div>
+    </div>
+{% endblock %}
+
+{% block contenu %}
+    <div class="grid_10 push_1" id="content" {% if existant is defined %}
+         audit="{{existant.id}}"{% endif %}>
+        <h1 class="grid_10">Audit pour <span id="client">{{ client }}</span></h1>
+        {% if existant is not defined %}
+            {% set existant = null %}
+        {% endif %}
+        <ul class="grid_9">
+            {% for audit in audits %}
+                {% if audit  == constant('SSS\\AuditBundle\\Entity\\Audit::ERGO') %}
+                    <li><a href="#ergonomie">Ergonomie</a></li>
+                {% endif %}
+                {% if audit  == constant('SSS\\AuditBundle\\Entity\\Audit::ACCESS') %}
+                    <li><a href="#accessibilite">Accessibilité</a></li>
+                {% endif %}
+                {% if audit  == constant('SSS\\AuditBundle\\Entity\\Audit::COMPA') %}
+                   <li><a href="#compatibilite">Compatibilité</a></li>
+                {% endif %}
+                {% if audit  == constant('SSS\\AuditBundle\\Entity\\Audit::FCT') %}
+                    <li><a href="#fonctionnalites">Fonctionnalités</a></li>
+                {% endif %}
+            {% endfor %}
+                    <li><a href="#note">Total &amp; Envoi</a></li>
+        </ul>
+        {% set total = 0 %}
+        {% for audit in audits %}
+            {% if audit  == constant('SSS\\AuditBundle\\Entity\\Audit::ERGO') %}
+                {% set total = total + constant('SSS\\AuditBundle\\Entity\\ErgoAudit::NBR_QUESTIONS') %}
+                {% render controller('SSSAuditBundle:Renderer:Ergo', {'existant': existant}) %}
+            {% endif %}
+            {% if audit  == constant('SSS\\AuditBundle\\Entity\\Audit::ACCESS') %}
+                {% set total = total + constant('SSS\\AuditBundle\\Entity\\AccessAudit::NBR_QUESTIONS') %}
+                {% render controller('SSSAuditBundle:Renderer:Access', {'existant': existant}) %}
+            {% endif %}
+            {% if audit  == constant('SSS\\AuditBundle\\Entity\\Audit::COMPA') %}
+                {#% set total = total + 50 %#}
+                {% render controller('SSSAuditBundle:Renderer:Compa', {'existant': existant}) %}
+            {% endif %}
+            {% if audit  == constant('SSS\\AuditBundle\\Entity\\Audit::FCT') %}
+                {#% set total = total + 50 %#}
+                {% render controller('SSSAuditBundle:Renderer:Fct', {'existant': existant}) %}
+            {% endif %}
+        {% endfor %}
+        <p id="note" class="grid_10">Total : <span id="results">0</span>/<span id="note_max">{{ total }}</span></p>
+
+        <label for="commentaire" class="grid_9">Commentaire : </label>
+        <br />
+        <textarea class="grid_9" id="commentaire" placeholder="Si vous le désirez, vous pouvez mettre ici un commentaire pour votre client."></textarea>
+        <button id="send_data" class="button push_4 grid_2">Envoyer</button>
+    </div>
+{% endblock %}

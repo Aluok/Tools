@@ -1,0 +1,22 @@
+{% for task in tasksList %}
+	{% if loop.index != 1 %}
+		<li>
+			<article class="update" id="{{ task.id }}">
+				<h3 class="task_title"> {{ task.titre }}</h3>
+				<p class="task_description">{{ task.description }} </p>
+				<input type="hidden" class="task_under" value="{{ task.tachePrincipale.id }}" />
+			</article>
+			{#<a href="{{ path('sss_to_do_del_task', {'task': task.id}) }}">#}<button type="button">Supprimer</button>{#</a>#}
+
+		</li>
+		{% if task.sousTaches is not empty %}
+			<ul>
+		{% else %}
+			{% if tasksList[loop.index] is defined %}
+				{% if tasksList[loop.index].tachePrincipale != task.tachePrincipale %}
+					</ul>
+				{% endif %}
+			{% endif %}
+		{% endif %}
+	{% endif %}
+{% endfor %}

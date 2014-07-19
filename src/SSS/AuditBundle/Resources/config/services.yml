@@ -1,0 +1,7 @@
+parameters:
+#    sss_audit.example.class: SSS\AuditBundle\Example
+
+services:
+#    sss_audit.example:
+#        class: %sss_audit.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
