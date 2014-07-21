@@ -296,7 +296,7 @@ $(function(){
         gereAffichageAdd(tests);
     });
     $(document).click(function(e){
-        if(!$(event.target).closest(".inner_overlay, .update, .delete, .add,.acces_client").length){
+        if(!$(event.target).closest(".inner_overlay, .update, .delete, .add,.acces_client, #creer").length){
             $('.overlay').fadeOut(TPS_ANIM).addClass('hidden');
         }
     });

@@ -14,8 +14,6 @@ class DefaultController extends Controller
     }
     public function indexAction()
     {
-
-
         return $this->render('SSSAccueilBundle:Default:index.html.twig');
     }
 }

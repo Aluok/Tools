@@ -30,11 +30,14 @@ class XML
     //Function to use at the start of an element
     private function start($parser,$element_name,$element_attrs) {
         $array = array();
-
         if($element_name == "IMPORT" && isset($element_attrs['PREFIX'])){
             if(substr($element_attrs['RESOURCE'], 0, 4) === '@SSS'){
-
-                $lien ='http://'.$_SERVER['SERVER_NAME'].split('.php',$_SERVER['REQUEST_URI'])[0].'.php';
+                if(preg_match('#.php#', $_SERVER['REQUEST_URI']) == false){
+                    $code = 'index.php';
+                }else{
+                    $code = '.php';
+                }
+                $lien ='http://'.$_SERVER['SERVER_NAME'].split('.php',$_SERVER['REQUEST_URI'])[0].$code;
                 if(!preg_match("#/$#", $lien)){
                     $lien .= '/';
                 }

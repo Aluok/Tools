@@ -25,10 +25,6 @@ class AuditController extends Controller
     public $em;
 
 
-    public function indexAction() {
-        return $this->render('SSSAuditBundle:Audit:index.html.twig');
-    }
-
     public function updateAction() {
         $request = $this->get('request');
         if($request->getMethod() == 'POST') {

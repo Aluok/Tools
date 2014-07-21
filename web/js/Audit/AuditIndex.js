@@ -21,7 +21,7 @@ $(function () {
         }
     });
     $('#creer').click(function (e) {
-        $("#overlay_add_audit").show();
+        $("#overlay_add_audit").removeClass('hidden');
         e.preventDefault();
     })
     $(document).click(function(e){
@@ -31,7 +31,7 @@ $(function () {
     });
     $(window).keyup(function(e){
         if(e.which == 27){
-            $("#overlay_add_audit").hide();
+            $("#overlay_add_audit").addClass('hidden');
         }
     });
 });

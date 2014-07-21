@@ -6,6 +6,7 @@
 {% endblock %}
 
 {% block js_lien %}
+{{ parent() }}
     <script type="text/javascript" src="{{ asset('js/Audit/AuditListAudits.js') }}">
     </script>
 {% endblock %}
@@ -47,7 +48,7 @@
 {% endblock %}
 
 {% block contenu %}
-    <div id="content_no_padding" class="grid_10 push_1 ">
+    <div id="content" class="col10 last no_padding">
         {% if error_message is not null %}
            <p>{{error_message}}</p>
         {% endif %}

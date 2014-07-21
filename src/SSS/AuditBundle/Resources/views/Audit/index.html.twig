@@ -1,44 +1,48 @@
-{% extends "SSSAuditBundle::layout.html.twig" %}
+<div class="overlay hidden" id="overlay_add_audit" role="alert">
+    <form action="{{ path('sss_audit_add') }}" method="get" class="inner_overlay">
+        <label for="nom_client">Nom de votre client : </label>
+        <input type="text" id="nom_client" name="nom_client" />
+        <br />
 
-{% block title %}
-    Gestion des audits effectués - {{ parent() }}
-{% endblock %}
-
-{% block js_lien %}
-    <script type="text/javascript" src="{{ asset('js/Audit/AuditIndex.js') }}"></script>
-{% endblock %}
-
-{% block overlay %}
-    <div class="overlay hidden" id="overlay_add_audit" role="alert">
-        <form action="{{ path('sss_audit_add') }}" method="get" class="inner_overlay">
-            <label for="nom_client">Nom de votre client : </label>
-            <input type="text" id="nom_client" name="nom_client" />
-            <br />
-            <p class="hidden error" id="nom_client_error">Merci de renseigner un nom.</p>
-            <input class="check" type="checkbox" id="global" value="global" />
-            <label for="global">Global</label>
-            <br />
-            <input class="check" type="checkbox" id="ergo" name="ergo" value="ergo" />
-            <label for="ergo">Ergonomie</label>
-            <br />
-            <input class="check" type="checkbox" id="access" name="access" value="access" />
-            <label for="access">Accessibilité</label>
-            <br />
-            <input class="check" type="checkbox" id="compa" name="compa" value="compa" />
-            <label for="compa">Compabilité</label>
-            <br />
-            <input class="check" type="checkbox" id="fct" name="fct" value="fct" />
-            <label for="fct">Fonctionnalités</label>
-            <br />
-            <p class="hidden error" id="checkbox_error">Merci de choisir au moins un champs</p>
-            <input type="submit" value="ok" class="button" id="submit" />
-        </form>
-    </div>
-{% endblock %}
-
-{% block contenu %}
-    <div class="grid_10 push_1" id="content">
-        <button class=" button grid_2 push_2"><a href="#" id="creer">Créer audit</a></button>
-        <button class="button grid_2 push_4"><a href="{{ path('sss_audit_audit_liste') }}">Liste d'audits</a></button>
-    </div><!--</ul>-->
-{% endblock %}
+        <label for="site_client">Site de votre client : </label>
+        <input type="url" id="site_client" name="site_client" />
+        <br />
+        <p class="hidden error" id="nom_client_error">Merci de renseigner un nom.</p>
+        <input class="check" type="checkbox" id="global" value="global" />
+        <label for="global">Global</label>
+        <br />
+        <input class="check" type="checkbox" id="ergo" name="ergo" value="ergo" />
+        <label for="ergo">Ergonomie</label>
+        <br />
+        <input class="check" type="checkbox" id="access" name="access" value="access" />
+        <label for="access">Accessibilité</label>
+        <br />
+        <input class="check" type="checkbox" id="compa" name="compa" value="compa" />
+        <label for="compa">Compabilité</label>
+        <br />
+        <input class="check" type="checkbox" id="fct" name="fct" value="fct" />
+        <label for="fct">Fonctionnalités</label>
+        <br />
+        <p class="hidden error" id="checkbox_error">Merci de choisir au moins un champs</p>
+        <input type="submit" value="ok" class="button" id="submit" />
+        <!--<input type="submit" value="Créer un audit automatique" class="button" name="automated" id="submit" />-->
+    </form>
+</div>
+<ul class="col2" id="menu">
+    {% if is_granted('ROLE_AUDITEUR') %}
+        <li class="onerow col12 firstrow">
+            <a href="#" id="creer">Créer audit</a>
+        </li>
+        <li class="onerow col12">
+            <a href="{{ path('sss_audit_audit_liste') }}">Liste d'audits</a>
+        </li>
+    {% endif %}
+    {% if not is_granted('IS_AUTHENTICATED_FULLY') %}
+        <li class="onerow col12">
+            <a href="{{ path('fos_user_security_login') }}">Se logguer</a>
+        </li>
+    {% endif %}
+    <li class="onerow col12 lastrow">
+        <a href="{{ path('sss_accueil_homepage') }}">Retour outils</a>
+    </li>
+</ul>

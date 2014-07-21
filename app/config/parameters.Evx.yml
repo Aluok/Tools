@@ -1,0 +1,14 @@
+#this file correspond to the config of EVXOnline
+parameters:
+    database_driver: pdo_mysql
+    database_host: clm01.evxonline.net
+    database_port: null
+    database_name: tools
+    database_user: tools
+    database_password: a0k0_RtONH
+    mailer_transport: smtp
+    mailer_host: 127.0.0.1
+    mailer_user: null
+    mailer_password: null
+    locale: fr
+    secret: ThisTokenIsNotSoSecretChangeIt

@@ -3,33 +3,31 @@
     <head>
 	    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <link rel="stylesheet" type="text/css" href="{{ asset('css/reset.css') }}" />
-        <link rel="stylesheet" type="text/css" href="{{ asset('css/960_12_col.css') }}" />
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/onepcssgrid.css') }}" />
         <link rel="stylesheet" type="text/css" href="{{ asset('css/text.css') }}" />
 	    <link rel="stylesheet" type="text/css" href="{% block css %}{{ asset('css/style.css') }}{% endblock %}" />
 	    <title>{% block title %}{% endblock %}</title>
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-    </head>
-    <body>
-        <div id="page" class="container_12">
 
-            {% block header %}
-                <header>
-                </header>
-	        {% endblock %}
-
-            {% block overlay %}
-            {% endblock %}
-
-	        <section id="body">
-            	{% block contenu %}
-			    {% endblock %}
-            </section>
-
-        </div>
         <script type="text/javascript" src="{{ asset('js/jquery.js') }}"></script>
         {% block js_lien %}
 
         {% endblock %}
+
+    </head>
+    <body  class="onepcssgrid-1000">
+        {% block overlay %}
+        {% endblock %}
+        <header class="col12">
+            {% block header %}
+            {% endblock %}
+        </header>
+        {% block menu %}
+        {% endblock %}
+        <section id="body">
+        	{% block contenu %}
+		   {% endblock %}
+        </section>
 
     </body>
 </html>

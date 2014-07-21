@@ -1,23 +1,42 @@
 {% extends "::layout.html.twig" %}
 
-{% block header %}
-    <header class="grid_12 ">
-        <h1 class="grid_5 push_6">Outil d'audits</h1>
-        <h2 class="grid_3 pull_4">Évaluation de sites web</h2>
-        <div class="clear"></div>
-
-        {% render controller('SSSAccueilBundle:Default:menu') %}
-    </header>
-{% endblock %}
-
 {% block title %}
-tools.julien-humbert.com
+    tools.julien-humbert.com
 {% endblock %}
 
 {% block js_lien %}
+    <script type="text/javascript" src="{{ asset('js/Audit/AuditIndex.js') }}"></script>
+{% endblock %}
+
+
+{% block header %}
+    <div class="onerow">
+        <img src="{{ asset('images/logo/logo.png') }}" class="col2" />
+        <h1 class="col3">Outil d'audits</h1>
+        <h2 class="col4">Évaluation de sites web</h2>
+    </div>
+    <div class="onerow">
+        <p class="col4">
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                {{ 'layout.logged_in_as'|trans({'%username%': app.user.username}, 'FOSUserBundle') }} |
+                <a href="{{ path('fos_user_security_logout') }}">
+                    {{ 'layout.logout'|trans({}, 'FOSUserBundle') }}
+                </a>
+            {% else %}
+                <a href="{{ path('fos_user_security_login') }}">{{ 'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+            {% endif %}
+        </p>
+        <nav class="">
+            {% render controller('SSSAccueilBundle:Default:menu') %}
+        </nav>
+    </div>
 {% endblock %}
 
 {% block contenu %}
+{% endblock %}
+
+{% block menu %}
+      {% include 'SSSAuditBundle:Audit:index.html.twig' %}
 {% endblock %}
 
 {% block overlay %}
@@ -26,3 +45,5 @@ tools.julien-humbert.com
 {% block css %}
     {{ asset('css/auditBundle.css') }}
 {% endblock %}
+
+
