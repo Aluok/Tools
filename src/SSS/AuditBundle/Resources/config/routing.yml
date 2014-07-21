@@ -30,12 +30,14 @@ sss_audit_update:
     pattern: /update/audit
     defaults: { _controller: SSSAuditBundle:Audit:update }
 
-sss_audit_homepage:
-    pattern:  /
-    defaults: { _controller: SSSAuditBundle:Default:index }
+
 
 sss_audit_create_access:
     pattern: /create/{client}
     defaults: { _controller: SSSAuditBundle:Audit:createAccess}
     requirements:
         client: \D+
+
+sss_audit_homepage:
+    pattern:  /
+    defaults: { _controller: SSSAuditBundle:Default:index }
