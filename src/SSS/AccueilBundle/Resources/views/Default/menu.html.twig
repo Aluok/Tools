@@ -1,5 +1,7 @@
 <ul class="">
     {% for route in routes %}
+    {% if route.nom != "User" %}
         <li class=""><a href="{{ route.lien }}">{{ route.nom }}</a></li>
+    {% endif %}
     {% endfor %}
 </ul>

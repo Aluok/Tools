@@ -7,6 +7,7 @@
     <field name="auditeur" type="integer" column="auditeur"/>
     <field name="audits" type="integer" column="audits"/>
     <field name="client" type="string" column="client" length="255"/>
-    <field name="commentaire" type="text" column="commentaire"/>
+    <field name="commentaire" type="text" column="commentaire" nullable="true" />
+    <field name="siteWeb" type="text" column="site_web" nullable="true" />
   </entity>
 </doctrine-mapping>

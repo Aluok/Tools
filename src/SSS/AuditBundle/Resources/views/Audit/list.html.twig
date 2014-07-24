@@ -15,7 +15,7 @@
     <div id="overlay_acces" class="overlay hidden">
         <form method="post" action="" class="inner_overlay" id="create_access">
             <label for="mail" class="grid_3">Mail :</label><br />
-            <input type="email" name="mail" id="mail" placeholder="Type in here the mail of your client" class="grid_3" /><br />
+            <input type="email" name="mail" id="mail" placeholder="Type in here the mail of your client" class="grid_4" /><br />
             <input type="submit" class="button" value="Créer accès" />
         </form>
         <div class="grid_7 inner_overlay hidden" id="infos_access">
@@ -48,35 +48,37 @@
 {% endblock %}
 
 {% block contenu %}
-    <div id="content" class="col10 last no_padding">
+    <div id="content" class="clear last no_padding">
         {% if error_message is not null %}
            <p>{{error_message}}</p>
         {% endif %}
         <ul id="list_client">
             {% for audit in audits %}
-                <li id="{{ audit.id }}" action_url="{{ path('sss_audit_create_access', {'client': audit.client}) }}"><span class="client grid_9 alpha">{{ audit.client }}</span><button class="menu"></button>
-                    <div class="details">
-                        <p class="grid_2">Total : {{ attribute(note_audits, loop.index0).total }}</p>
-                        <p class="grid_7">{{ audit.commentaire }}</p>
-                        <ul class="grid_4">
-                            {% if audit.testErgo %}
-                                <li>Ergo : {{ attribute(attribute(note_audits, loop.index0), 'ergo') }}</li>
-                            {% endif %}
-                            {% if audit.testAccess %}
-                                <li>Access : {{ attribute(attribute(note_audits, loop.index0), 'access') }}</li>
-                            {% endif %}
-                            {% if audit.testCompa %}
-                                <li>Compa : {{ attribute(attribute(note_audits, loop.index0), 'compa') }}</li>
-                            {% endif %}
-                            {% if audit.testFct %}
-                                <li>Fonctions : {{ attribute(attribute(note_audits, loop.index0), 'fct') }}</li>
-                            {% endif %}
-                        </ul>
-                        <div class="options grid_5">
-                            <button class="button add"><a href="#" class="{{ audit.audits }}">+</a></button>
-                            <button class="button update"><a href="#" class="{{ audit.audits }}"><img src="{{ asset('images/icones/crayon.jpg') }}" alt="Modifier" /></a></button>
-                            <button class="button delete"><a href="#" class="{{ audit.audits }}"><img src="{{ asset('images/icones/close.button.png') }}" alt="Supprimer" /></a></button>
-                            <button class="button acces_client">Accès client</button>
+                <li id="{{ audit.id }}" action_url="{{ path('sss_audit_create_access', {'client': audit.client}) }}"><span class="client col11 onerow">{{ audit.client }}</span><button class="menu"></button>
+                    <div class="details onerow">
+                        <p class="col2">Total : {{ attribute(note_audits, loop.index0).total }}</p>
+                        <p class="col7">{{ audit.commentaire }}</p>
+                        <div class="onerow note_and_actions">
+                            <ul class="col4">
+                                {% if audit.testErgo %}
+                                    <li>Ergo : {{ attribute(attribute(note_audits, loop.index0), 'ergo') }}</li>
+                                {% endif %}
+                                {% if audit.testAccess %}
+                                    <li>Access : {{ attribute(attribute(note_audits, loop.index0), 'access') }}</li>
+                                {% endif %}
+                                {% if audit.testCompa %}
+                                    <li>Compa : {{ attribute(attribute(note_audits, loop.index0), 'compa') }}</li>
+                                {% endif %}
+                                {% if audit.testFct %}
+                                    <li>Fonctions : {{ attribute(attribute(note_audits, loop.index0), 'fct') }}</li>
+                                {% endif %}
+                            </ul>
+                            <div class="options col5">
+                                <button class="button add"><a href="#" class="{{ audit.audits }}">+</a></button>
+                                <button class="button update"><a href="#" class="{{ audit.audits }}"><img src="{{ asset('images/icones/crayon.jpg') }}" alt="Modifier" /></a></button>
+                                <button class="button delete"><a href="#" class="{{ audit.audits }}"><img src="{{ asset('images/icones/close.button.png') }}" alt="Supprimer" /></a></button>
+                                <button class="button acces_client">Accès client</button>
+                            </div>
                         </div>
                     </div>
                 </li>

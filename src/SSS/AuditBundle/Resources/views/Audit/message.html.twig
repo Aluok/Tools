@@ -1,0 +1,15 @@
+{% extends "SSSAuditBundle::layout.html.twig" %}
+
+{% block title %}
+    Audit - Message - {{parent()}}
+{% endblock %}
+
+{% block contenu %}
+    <div class="grid_10 push_1" id="content" >
+        {% autoescape false %}
+        <h1>{{ title }}</h1>
+
+        <p>{{ message }}</p>
+        {% endautoescape %}
+    </div>
+{% endblock %}

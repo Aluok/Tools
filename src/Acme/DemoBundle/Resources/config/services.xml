@@ -3,16 +3,16 @@
 <container xmlns="http://symfony.com/schema/dic/services"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
-
+    <parameters>
+        <parameter key="file_path">/var/www/SSS/Tools/src/Acme/DemoBundle/Resources/test.xml</parameter>
+    </parameters>
     <services>
-        <service id="twig.extension.acme.demo" class="Acme\DemoBundle\Twig\Extension\DemoExtension" public="false">
-            <tag name="twig.extension" />
-            <argument type="service" id="twig.loader" />
+        <service id="split_file" class="Acme\DemoBundle\SplitFile">
+            <argument>%file_path%</argument>
+            <argument type="service" id="old_sound_rabbit_mq.split_file_producer" />
         </service>
-
-        <service id="acme.demo.listener" class="Acme\DemoBundle\EventListener\ControllerListener">
-            <tag name="kernel.event_listener" event="kernel.controller" method="onKernelController" />
-            <argument type="service" id="twig.extension.acme.demo" />
+        <service id="process_node" class="Acme\DemoBundle\Consumer\ReadNode">
+            <argument type="service" id="logger" />
         </service>
     </services>
 </container>

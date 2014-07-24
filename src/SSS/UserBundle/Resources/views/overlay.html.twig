@@ -1,0 +1,13 @@
+<div class="grid_10 push_1 inner_overlay">
+    {% for type, messages in app.session.flashbag.all() %}
+        {% for message in messages %}
+            <div class="flash-{{ type }}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+    <div class="grid_5 push_3 ">
+        {% block fos_user_content %}
+        {% endblock fos_user_content %}
+    </div>
+</div>

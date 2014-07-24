@@ -7,6 +7,8 @@
     <import resource="@SSSAccueilBundle/Resources/config/routing.xml" />
     <import resource="@SSSAuditBundle/Resources/config/routing.yml" prefix="/audit"/>
     <import resource="@SSSToDoBundle/Resources/config/routing.yml" prefix="/ToDo" />
+
+    <import resource="@SSSUserBundle/Resources/config/routing.xml" prefix="/user" />
     <import resource="@FOSUserBundle/Resources/config/routing/security.xml" prefix="/user" />
     <import resource="@FOSUserBundle/Resources/config/routing/profile.xml" prefix="/profile" />
     <import resource="@FOSUserBundle/Resources/config/routing/registration.xml" prefix="/register" />

@@ -6,6 +6,10 @@ sss_audit_audit_index:
     pattern: /index
     defaults: { _controller: SSSAuditBundle:Audit:index }
 
+sss_audit_notif:
+    pattern: /notif
+    defaults: { _controller: SSSAuditBundle:Audit:notifications }
+
 sss_audit_audit_liste:
     pattern: /audits/{errorMessage}
     defaults: { _controller: SSSAuditBundle:Audit:list, errorMessage: null }
@@ -13,6 +17,10 @@ sss_audit_audit_liste:
 sss_audit_add:
     pattern: /add/audit
     defaults: { _controller: SSSAuditBundle:Audit:add }
+
+sss_audit_add_automated:
+    pattern: /add/audit/automated
+    defaults: { _controller: SSSAuditBundle:Audit:addAutomated }
 
 sss_audit_AJAX_save:
     pattern: /save/audit/{audit}

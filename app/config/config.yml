@@ -69,6 +69,22 @@ swiftmailer:
     spool:     { type: memory }
 
 fos_user:
-    db_driver:      orm
-    firewall_name:  main
-    user_class:     SSS\UserBundle\Entity\User
+    db_driver:      %fos_user_db_driver%
+    firewall_name:  %fos_user_firewall_name%
+    user_class:     %fos_user_user_class%
+
+
+# app/config/config.yml
+
+old_sound_rabbit_mq:
+    connections: %rabbitmq_connections%
+    producers:
+        split_file:
+            connection:       default
+            exchange_options: { name: 'test', type: fanout }
+    consumers:
+        read_node:
+            connection:       default
+            exchange_options: { name: 'test', type: fanout }
+            queue_options:    { name: 'test', durable: false }
+            callback:         process_node

@@ -4,7 +4,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://symfony.com/schema/routing http://symfony.com/schema/routing/routing-1.0.xsd">
 
-    <route id="sss_user_homepage" pattern="/hello/{name}">
-        <default key="_controller">SSSUserBundle:Default:index</default>
+    <route id="sss_fos_user_overlay" pattern="/login/overlay">
+        <default key="_controller">SSSUserBundle:Default:loginOverlay</default>
     </route>
 </routes>

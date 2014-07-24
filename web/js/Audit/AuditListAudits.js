@@ -288,6 +288,7 @@ $(function(){
     $('.acces_client').click(function(event){
         $('#overlay_acces').fadeIn(TPS_ANIM).removeClass('hidden');
         $('form.inner_overlay').attr('action', $(event.target).parents('li').attr('action_url'));
+        $('#infos_access').addClass('hidden');
     });
     $('.add').click(function(){
         $('#overlay_update').fadeIn(TPS_ANIM).removeClass('hidden');
@@ -295,10 +296,6 @@ $(function(){
         $('#id_to_update').val($(this).parents('li').attr('id'));
         gereAffichageAdd(tests);
     });
-    $(document).click(function(e){
-        if(!$(event.target).closest(".inner_overlay, .update, .delete, .add,.acces_client, #creer").length){
-            $('.overlay').fadeOut(TPS_ANIM).addClass('hidden');
-        }
-    });
+
 
 });

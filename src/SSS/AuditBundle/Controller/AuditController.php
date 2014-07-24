@@ -18,6 +18,9 @@ use SSS\AuditBundle\Entity\AccessAudit;
 use SSS\AuditBundle\Entity\CompaAudit;
 use SSS\AuditBundle\Entity\FctAudit;
 
+use PhpAmqpLib\Connection\AMQPConnection;
+use PhpAmqpLib\Message\AMQPMessage;
+
 use SSS\AuditBundle\Work\AJAX;
 
 class AuditController extends Controller
@@ -131,7 +134,75 @@ class AuditController extends Controller
     public function addAction() {
         $audits = $this->auditsToPrint(array());
         return $this->render('SSSAuditBundle:Audit:add_update.html.twig', array('audits' => $audits,
-                                                                               'client' => $_GET['nom_client']));
+                                                                               'client' => $_POST['nom_client']));
+    }
+    public function addAutomatedAction() {
+        $request = $this->get('request');
+        if($request->getMethod() == 'POST'){
+            $content = $request->getContent();
+            if($content != null){
+                $params = array();
+                if(isset($_POST['nom_client']) &&
+                  isset($_POST['site_client'])){
+                    $params['general'] = array('client' => $_POST['nom_client'],
+                                              'site_client' => $_POST['site_client'],
+                                              'commentaire' => null);
+                }
+                if(isset($params['general']['client'])){
+                    $connection = new AMQPConnection('localhost', 5672, 'guest', 'guest');
+                    $channel = $connection->channel();
+
+                    $channel->exchange_declare('audit', 'direct', false, false, false);
+
+                    $audits = $this->auditsToPrint(array());
+                    $key ="";
+                    if(in_array(Audit::ERGO, $audits)){
+                        $params['ergo'] = null;
+                        $key .= "ergo.";
+                    }else{
+                        $key .= "not.";
+                    }
+                    if(in_array(Audit::COMPA, $audits)){
+                        $key .= "compa.";
+                    }else{
+                        $key .= "not.";
+                    }
+                    if(in_array(Audit::ACCESS, $audits)){
+                        $key .= "access.";
+                    }else{
+                        $key .= "not.";
+                    }
+                    if(in_array(Audit::FCT, $audits)){
+                        $key .= "fct";
+                    }else{
+                        $key .= "not";
+                    }
+                    $ajax = new AJAX($this->getDoctrine()->getManager());
+                    $audits_to_save = $ajax->getAudits($params, $this->get('security.context')->getToken()->getUser()->getId());
+                    $id = $this->saveToBdd($audits_to_save);
+                    $channel->basic_publish(new AMQPMessage($id), 'audit', $key);
+                    $message = "Nous avons enregistré votre demande de test automatisé. <br />
+                    Celui-ci sera effectué dans les 24h suivantes.";
+                    $title = 'Audit pour '.$_POST['nom_client'].'. id= '.$id;
+                    $channel->close();
+                    $connection->close();
+                }else{
+                    $message = "Une erreur est survenue : Veuillez contacter l'administrateur et lui signaler l'erreur : automated.params.general";
+                    $title = 'Erreur';
+                }
+            }else{
+                //var_dump($content);
+                $message = "Une erreur est survenue : Veuillez contacter l'administrateur et lui signaler l'erreur : automated.content.null";
+                $title = 'Erreur';
+            }
+        }else{
+            $message = "Une erreur est survenue : Veuillez contacter l'administrateur et lui signaler l'erreur : automated.method.type";
+            $title = 'Erreur';
+            //var_dump($$request->getMethod());
+        }
+        return $this->render('SSSAuditBundle:Audit:message.html.twig', array('message' => $message,
+                                                                            'title' => $title));
+
     }
 
     public function AJAXsaveAction($audit){
@@ -166,13 +237,17 @@ class AuditController extends Controller
     private function saveToBdd($audits){
         $length = count($audits);
         $em = $this->getDoctrine()->getManager();
+
+                   // var_dump($audits);
         $em->persist($audits[0]);
         $em->flush();
+        $id= $audits[0]->getId();
         for($i = 1; $i < $length; $i++){
-            $audits[$i]->setId($audits[0]->getId());
+            $audits[$i]->setId($id);
             $em->persist($audits[$i]);
         }
         $em->flush();
+        return $id;
     }
 
     public function deleteAction(Audit $audit){
@@ -195,19 +270,23 @@ class AuditController extends Controller
 
     private function auditsToPrint($update){
         $audits = array();
-        if(isset($_GET['ergo']) || in_array('ergo', $update)){
+        if(isset($_POST['ergo']) || in_array('ergo', $update)){
             array_push($audits, Audit::ERGO);
         }
-        if(isset($_GET['access']) || in_array('access', $update)){
+        if(isset($_POST['access']) || in_array('access', $update)){
             array_push($audits, Audit::ACCESS);
         }
-        if(isset($_GET['compa']) || in_array('compa', $update)){
+        if(isset($_POST['compa']) || in_array('compa', $update)){
             array_push($audits, Audit::COMPA);
         }
-        if(isset($_GET['fct']) || in_array('fct', $update)){
+        if(isset($_POST['fct']) || in_array('fct', $update)){
             array_push($audits, Audit::FCT);
         }
         return $audits;
+    }
+
+    public function notificationsAction(){
+
     }
 }
 

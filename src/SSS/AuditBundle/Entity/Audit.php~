@@ -207,32 +207,4 @@ class Audit
                $this->audits == Audit::FCT + Audit::ACCESS + Audit::COMPA||
                $this->audits == Audit::FCT + Audit::ACCESS + Audit::COMPA + Audit::ERGO;
     }
-    /**
-     * @var string
-     */
-    private $siteWeb;
-
-
-    /**
-     * Set siteWeb
-     *
-     * @param string $siteWeb
-     * @return Audit
-     */
-    public function setSiteWeb($siteWeb)
-    {
-        $this->siteWeb = $siteWeb;
-
-        return $this;
-    }
-
-    /**
-     * Get siteWeb
-     *
-     * @return string
-     */
-    public function getSiteWeb()
-    {
-        return $this->siteWeb;
-    }
 }

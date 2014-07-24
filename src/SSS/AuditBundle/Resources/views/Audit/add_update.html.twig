@@ -21,28 +21,30 @@
 {% block contenu %}
     <div class="grid_10 push_1" id="content" {% if existant is defined %}
          audit="{{existant.id}}"{% endif %}>
-        <h1 class="grid_10">Audit pour <span id="client">{{ client }}</span></h1>
+        <h1 class="col10">Audit pour <span id="client">{{ client }}</span></h1>
         {% if existant is not defined %}
             {% set existant = null %}
         {% endif %}
-        <ul class="grid_9">
+        <ul class="onerow col11 last" id="onglets">
             {% for audit in audits %}
                 {% if audit  == constant('SSS\\AuditBundle\\Entity\\Audit::ERGO') %}
-                    <li><a href="#ergonomie">Ergonomie</a></li>
+                    <li class="col2"><a href="#ergonomie">Ergonomie</a></li>
                 {% endif %}
                 {% if audit  == constant('SSS\\AuditBundle\\Entity\\Audit::ACCESS') %}
-                    <li><a href="#accessibilite">Accessibilité</a></li>
+                    <li class="col2"><a href="#accessibilite">Accessibilité</a></li>
                 {% endif %}
                 {% if audit  == constant('SSS\\AuditBundle\\Entity\\Audit::COMPA') %}
-                   <li><a href="#compatibilite">Compatibilité</a></li>
+                   <li class="col2"><a href="#compatibilite">Compatibilité</a></li>
                 {% endif %}
                 {% if audit  == constant('SSS\\AuditBundle\\Entity\\Audit::FCT') %}
-                    <li><a href="#fonctionnalites">Fonctionnalités</a></li>
+                    <li class="col2"><a href="#fonctionnalites">Fonctionnalités</a></li>
                 {% endif %}
             {% endfor %}
-                    <li><a href="#note">Total &amp; Envoi</a></li>
+                    <li class="col2 current"><a href="#note">Total &amp; Envoi</a></li>
         </ul>
         {% set total = 0 %}
+        <p id="note" class="col12">Total : <span id="results">0</span>/<span id="note_max">{{ total }}</span></p>
+
         {% for audit in audits %}
             {% if audit  == constant('SSS\\AuditBundle\\Entity\\Audit::ERGO') %}
                 {% set total = total + constant('SSS\\AuditBundle\\Entity\\ErgoAudit::NBR_QUESTIONS') %}
@@ -61,11 +63,11 @@
                 {% render controller('SSSAuditBundle:Renderer:Fct', {'existant': existant}) %}
             {% endif %}
         {% endfor %}
-        <p id="note" class="grid_10">Total : <span id="results">0</span>/<span id="note_max">{{ total }}</span></p>
 
-        <label for="commentaire" class="grid_9">Commentaire : </label>
+        <div class="part">
+            <label for="commentaire" class="col10">Commentaire : </label>
         <br />
-        <textarea class="grid_9" id="commentaire" placeholder="Si vous le désirez, vous pouvez mettre ici un commentaire pour votre client."></textarea>
-        <button id="send_data" class="button push_4 grid_2">Envoyer</button>
+        <textarea class="col11" id="commentaire" placeholder="Si vous le désirez, vous pouvez mettre ici un commentaire pour votre client."></textarea>
+        <button id="send_data" class="button col2">Envoyer</button></div>
     </div>
 {% endblock %}

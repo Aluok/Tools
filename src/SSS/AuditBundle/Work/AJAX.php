@@ -31,7 +31,7 @@ class AJAX{
                       ->setIdNon($audit['id_non']);
 
     }
-    public function getAudits($parameters, $auditeur, $id){
+    public function getAudits($parameters, $auditeur, $id = 0){
         if($id != 0){
             $this->audits = array($this->_em->getRepository('SSSAuditBundle:Audit')->find($id));
         }else{

@@ -18,6 +18,7 @@ class AppKernel extends Kernel
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new FOS\UserBundle\FOSUserBundle(),
+            new OldSound\RabbitMqBundle\OldSoundRabbitMqBundle(),
             new SSS\ToDoBundle\SSSToDoBundle(),
             new SSS\AuditBundle\SSSAuditBundle(),
             new SSS\AccueilBundle\SSSAccueilBundle(),
