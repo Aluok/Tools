@@ -5,6 +5,7 @@
 {% endblock %}
 
 {% block js_lien %}
+{{ parent() }}
     <script type="text/javascript" src="{{ asset('js/Audit/AuditAdd.js') }}"></script>
 {% endblock %}
 
@@ -40,7 +41,7 @@
                     <li class="col2"><a href="#fonctionnalites">Fonctionnalités</a></li>
                 {% endif %}
             {% endfor %}
-                    <li class="col2 current"><a href="#note">Total &amp; Envoi</a></li>
+                    <li class="col2 current"><a href="#total">Total &amp; Envoi</a></li>
         </ul>
         {% set total = 0 %}
         <p id="note" class="col12">Total : <span id="results">0</span>/<span id="note_max">{{ total }}</span></p>
@@ -64,7 +65,7 @@
             {% endif %}
         {% endfor %}
 
-        <div class="part">
+        <div class="part" id="total">
             <label for="commentaire" class="col10">Commentaire : </label>
         <br />
         <textarea class="col11" id="commentaire" placeholder="Si vous le désirez, vous pouvez mettre ici un commentaire pour votre client."></textarea>

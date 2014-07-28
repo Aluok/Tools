@@ -139,7 +139,7 @@ class AuditController extends Controller
     public function addAutomatedAction() {
         $request = $this->get('request');
         if($request->getMethod() == 'POST'){
-            $content = $request->getContent();
+            $content = $request->request;
             if($content != null){
                 $params = array();
                 if(isset($_POST['nom_client']) &&
@@ -152,7 +152,7 @@ class AuditController extends Controller
                     $connection = new AMQPConnection('localhost', 5672, 'guest', 'guest');
                     $channel = $connection->channel();
 
-                    $channel->exchange_declare('audit', 'direct', false, false, false);
+                    $channel->exchange_declare('audit1', 'topic', false, false, false);
 
                     $audits = $this->auditsToPrint(array());
                     $key ="";
@@ -180,10 +180,10 @@ class AuditController extends Controller
                     $ajax = new AJAX($this->getDoctrine()->getManager());
                     $audits_to_save = $ajax->getAudits($params, $this->get('security.context')->getToken()->getUser()->getId());
                     $id = $this->saveToBdd($audits_to_save);
-                    $channel->basic_publish(new AMQPMessage($id), 'audit', $key);
+                    $channel->basic_publish(new AMQPMessage($id), 'audit1', $key);
                     $message = "Nous avons enregistré votre demande de test automatisé. <br />
                     Celui-ci sera effectué dans les 24h suivantes.";
-                    $title = 'Audit pour '.$_POST['nom_client'].'. id= '.$id;
+                    $title = 'Audit pour '.$_POST['nom_client'].'. id= '.$id.' key = '.$key;
                     $channel->close();
                     $connection->close();
                 }else{
@@ -191,7 +191,7 @@ class AuditController extends Controller
                     $title = 'Erreur';
                 }
             }else{
-                //var_dump($content);
+
                 $message = "Une erreur est survenue : Veuillez contacter l'administrateur et lui signaler l'erreur : automated.content.null";
                 $title = 'Erreur';
             }
@@ -209,6 +209,7 @@ class AuditController extends Controller
         $request = $this->get('request');
         if($request->getMethod() == 'POST'){
             $content = $request->getContent();
+
             if($content != null){
                 $params = json_decode($content, true);
                 if(isset($params['general'])){
@@ -286,7 +287,14 @@ class AuditController extends Controller
     }
 
     public function notificationsAction(){
-
+        $user = $this->get('security.context')->getToken()->getUser();
+        $notifs = $this->getDoctrine()->getManager()->getRepository('SSSUserBundle:Notification')->getNotifs($user);
+        $length = count($notifs);
+        for($i =0; $i < $length; $i++){
+            $notifs[$i]->setNew(false);
+        }
+        $this->getDoctrine()->getManager()->flush();
+        return $this->render('SSSUserBundle:Notifs:notification.html.twig', array('notifs'=>$notifs));
     }
 }
 

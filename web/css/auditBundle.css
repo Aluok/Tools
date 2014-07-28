@@ -51,6 +51,9 @@
 .firstrow{
     border-top: none !important;
 }
+.center{
+    text-align: center;
+}
 /* corps de document */
 body{
 
@@ -259,10 +262,13 @@ nav li {
     border-left: none;
     border-right: none;
 }
+#choix_site_onglets li{
+    text-align: center;
+}
 #onglets li{
     float: right !important;
     text-align: center;
 }
-#onglets li.current{
+#onglets li.current, #choix_site_onglets li.current{
     background-color: #41332c;
 }

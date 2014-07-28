@@ -1,0 +1,20 @@
+{% extends "SSSAuditBundle::layout.html.twig" %}
+
+{% block title %}
+    Mes notifications - {{parent()}}
+{% endblock %}
+
+{% block js_lien %}
+    {{ parent() }}
+{% endblock %}
+
+{% block contenu %}
+    <div class="grid_10 push_1" id="content">
+        <h1 class="col10">Mes Notifications</h1>
+        <ul class="col12" id="Notifs">
+            {% for notif in notifs %}
+                <li class="col12">{{ notif.message }}<br />le {{ notif.date|date('d/m/Y') }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endblock %}

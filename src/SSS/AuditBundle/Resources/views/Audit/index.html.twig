@@ -1,12 +1,21 @@
+
 <div class="overlay hidden" id="overlay_add_audit" role="alert">
-    <form action="{{ path('sss_audit_add') }}" method="post" class="inner_overlay">
+    <form action="{{ path('sss_audit_add') }}" method="post" class="inner_overlay" enctype="multipart/form-data">
+        <!--<ul class="onerow onglets" id="choix_site_onglets">
+            <li class="col6 current" linkedTo="site">Site</li>
+            <li class="col6 last" linkedTo="file">Dossier</li>
+        </ul>-->
         <label for="nom_client">Nom de votre client : </label><br />
         <input type="text" id="nom_client" name="nom_client" />
         <br />
-
-        <label for="site_client">Site de votre client : </label><br />
-        <input type="url" id="site_client" name="site_client" require="false" />
-        <br />
+        <div class="infos_to_automated center" id="site">
+            <label for="site_client">Site de votre client : </label><br />
+            <input type="url" id="site_client" name="site_client" require="false" />
+        </div>
+       <!-- <div class="infos_to_automated hidden center" id="file">
+            <label for="file_client">Vous pouvez uploader un dossier<br /> correspondant au site.</label><br />
+            <input type="file" id="file_client" name="file_client" require="false" multiple/>
+        </div>-->
         <p class="hidden error" id="nom_client_error">Merci de renseigner un nom.</p>
         <p>Vous désirez réaliser un audit :</p>
         <input class="check" type="checkbox" id="global" value="global" />

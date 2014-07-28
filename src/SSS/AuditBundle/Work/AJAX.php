@@ -24,22 +24,16 @@ class AJAX{
         $this->_em = $em;
     }
     public function saveAudit($audit, $id){
-        var_dump($id);
-        var_dump($audit);
+        /*var_dump($id);
+        var_dump($this->audits);*/
         $this->audits[$id]->setIdOui($audit['id_oui'])
                       ->setIdPartiel($audit['id_partiel'])
                       ->setIdNon($audit['id_non']);
 
     }
     public function getAudits($parameters, $auditeur, $id = 0){
-        if($id != 0){
-            $this->audits = array($this->_em->getRepository('SSSAuditBundle:Audit')->find($id));
-        }else{
-            $this->audits = array(new Audit());
-        }
-        $this->audits[0]->setClient($parameters['general']['client'])
-                  ->setCommentaire($parameters['general']['commentaire'])
-                  ->setAuditeur($auditeur);
+        //var_dump($parameters);
+        $this->initiateGeneral($parameters['general'], $auditeur, $id);
        if($id != 0){
             if($this->audits[0]->testErgo() || isset($parameters['ergo'])){
                 $ergo = $this->_em->getRepository('SSSAuditBundle:ErgoAudit')->find($id);
@@ -89,7 +83,31 @@ class AJAX{
                     $this->saveAudit($parameters['fct'], $this->calculateIndex());
                 }
             }
-        }
+        }else{
+           if(isset($parameters['ergo'])){
+               array_push($this->audits, new ErgoAudit());
+                $this->ergo = true;
+               $this->saveAudit($parameters['ergo'], $this->calculateIndex());
+
+           }
+           if(isset($parameters['access'])){
+               array_push($this->audits, new AccessAudit());
+               $this->access = true;
+               $this->saveAudit($parameters['access'], $this->calculateIndex());
+
+           }
+           if(isset($parameters['compa'])){
+               array_push($this->audits, new CompaAudit());
+               $this->compa = true;
+               $this->saveAudit($parameters['compa'], $this->calculateIndex());
+
+           }
+           if(isset($parameters['fct'])){
+                array_push($this->audits, new FctAudit());
+                $this->fct = true;
+                $this->saveAudit($parameters['fct'], $this->calculateIndex());
+           }
+       }
         $this->audits[0]->generateAuditNumber($this->ergo, $this->access, $this->compa, $this->fct);
 
         return $this->audits;
@@ -115,6 +133,46 @@ class AJAX{
         else if($this->ergo || $this->compa || $this->access || $this->fct)
             return 1;
 
+    }
+    public function initiateGeneral($parametres,$auditeur, $id){
+        if($id != 0){
+            $this->audits = array($this->_em->getRepository('SSSAuditBundle:Audit')->find($id));
+        }else{
+            $this->audits = array(new Audit());
+        }
+        $this->audits[0]->setClient($parametres['client'])
+                  ->setCommentaire($parametres['commentaire'])
+                  ->setAuditeur($auditeur);
+        return $this->audits[0];
+    }
+
+    public function setErgo($exist){
+        $this->ergo = $exist;
+        return $this;
+    }
+    public function setAccess($exist){
+        $this->access = $exist;
+        return $this;
+    }
+    public function setCompa($exist){
+        $this->compa = $exist;
+        return $this;
+    }
+    public function setFct($exist){
+        $this->fct = $exist;
+        return $this;
+    }
+    public function getErgo(){
+        return $this->ergo;
+    }
+    public function getAccess(){
+        return $this->access;
+    }
+    public function getCompa(){
+        return $this->compa;
+    }
+    public function getFct(){
+        return $this->ergo;
     }
 
 }

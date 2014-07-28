@@ -22,7 +22,7 @@ $(function(){
             url= '/'+$('#content').attr('audit');
 
         }else{
-            url = '/';
+            url = '/0';
         }
         alert(url);
         to_send.general = json;
