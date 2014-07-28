@@ -1,7 +1,7 @@
 parameters:
-#    sss_audit.example.class: SSS\AuditBundle\Example
+    sss_audit.consumer.access.class: SSS\AuditBundle\Work\AMQP\AMQPConsAccess
 
 services:
-#    sss_audit.example:
-#        class: %sss_audit.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    sss_audit.consumer.access:
+        class: %sss_audit.consumer.access.class%
+        arguments: [@security.context]
